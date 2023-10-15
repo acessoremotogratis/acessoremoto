@@ -1,3 +1,7 @@
+```bash
+brew install imagemagick
+```
+
 <p align="center">
   <img src="res/logo-header.svg" alt="RustDesk - Your remote desktop"><br>
   <a href="#free-public-servers">Servers</a> •
@@ -11,7 +15,7 @@
 
 Chat with us: [Discord](https://discord.gg/nDceKgxnkV) | [Twitter](https://twitter.com/rustdesk) | [Reddit](https://www.reddit.com/r/rustdesk)
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I2I04VU09) 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I2I04VU09)
 
 [![Open Bounties](https://img.shields.io/endpoint?url=https%3A%2F%2Fconsole.algora.io%2Fapi%2Fshields%2Frustdesk%2Fbounties%3Fstatus%3Dopen)](https://console.algora.io/org/rustdesk/bounties?status=open)
 
@@ -80,11 +84,12 @@ sudo apt install -y zip g++ gcc git curl wget nasm yasm libgtk-3-dev clang libxc
         libclang-dev ninja-build libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 ```
 
-### openSUSE Tumbleweed 
+### openSUSE Tumbleweed
 
 ```sh
 sudo zypper install gcc-c++ git curl wget nasm yasm gcc gtk3-devel clang libxcb-devel libXfixes-devel cmake alsa-lib-devel gstreamer-devel gstreamer-plugins-base-devel xdotool-devel
 ```
+
 ### Fedora 28 (CentOS 8)
 
 ```sh
@@ -144,12 +149,15 @@ RustDesk does not support Wayland. Check [this](https://docs.fedoraproject.org/e
 Wayland does not seem to provide any API for sending keypresses to other windows. Therefore, the RustDesk uses an API from a lower level, namely the `/dev/uinput` device (Linux kernel level).
 
 When Wayland is the controlled side, you have to start in the following way:
+
 ```bash
 # Start uinput service
 $ sudo rustdesk --service
 $ rustdesk
 ```
+
 **Notice**: Wayland screen recording uses different interfaces. RustDesk currently only supports org.freedesktop.portal.ScreenCast.
+
 ```bash
 $ dbus-send --session --print-reply       \
   --dest=org.freedesktop.portal.Desktop \

@@ -1,3 +1,17 @@
+# How to RUN
+
+```
+export VCPKG_ROOT
+cargo run
+```
+
+## Build
+
+```
+cargo build --release
+cargo build --debug
+```
+
 # Cocoa Pods
 
 ```bash
@@ -10,12 +24,29 @@ gem install cocoapods --user-install
 brew install imagemagick
 ```
 
+# Build MacOS (Flutter)
+
+```
+gem install cocoapods --user-install
+brew install llvm create-dmg nasm yasm cmake gcc wget ninja pkg-config
+cargo install flutter_rust_bridge_codegen --version 3.10.6 --features "uuid"
+pushd flutter && flutter pub get && popd
+~/.cargo/bin/flutter_rust_bridge_codegen --rust-input ./src/flutter_ffi.rs --dart-output ./flutter/lib/generated_bridge.dart --c-output ./flutter/macos/Runner/bridge_generated.h
+# xcode-select --install # Install Command Line Tools if you haven't already.
+# sudo xcode-select --switch /Library/Developer/CommandLineTools # Enable command line tools
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+./build.py --flutter
+```
+
 # Customizing RustDesk
 
 Some tips for customizing RustDesk for Windows (other platforms might require additional changes)
 
+- [How to RUN](#how-to-run)
+  - [Build](#build)
 - [Cocoa Pods](#cocoa-pods)
 - [Convert Icons](#convert-icons)
+- [Build MacOS (Flutter)](#build-macos-flutter)
 - [Customizing RustDesk](#customizing-rustdesk)
 - [Changing the application name](#changing-the-application-name)
 - [Changing the application icons](#changing-the-application-icons)
@@ -27,7 +58,7 @@ Some tips for customizing RustDesk for Windows (other platforms might require ad
   - [Dev Container](#dev-container)
   - [Dependencies](#dependencies)
   - [Raw steps to build](#raw-steps-to-build)
-  - [Build](#build)
+  - [Build](#build-1)
   - [How to build on Linux](#how-to-build-on-linux)
     - [Ubuntu 18 (Debian 10)](#ubuntu-18-debian-10)
     - [openSUSE Tumbleweed](#opensuse-tumbleweed)
@@ -35,7 +66,7 @@ Some tips for customizing RustDesk for Windows (other platforms might require ad
     - [Arch (Manjaro)](#arch-manjaro)
     - [Install vcpkg](#install-vcpkg)
     - [Fix libvpx (For Fedora)](#fix-libvpx-for-fedora)
-    - [Build](#build-1)
+    - [Build](#build-2)
     - [Change Wayland to X11 (Xorg)](#change-wayland-to-x11-xorg)
   - [Wayland support](#wayland-support)
   - [How to build with Docker](#how-to-build-with-docker)

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXFileReference section */
@@ -48,7 +48,7 @@
 		CA603C4309E1E04653AD465F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1430;
 			};
 			buildConfigurationList = CA603C4309E180E02D6C7F57 /* Build configuration list for PBXProject "rustdesk" */;
 			compatibilityVersion = "Xcode 11.4";

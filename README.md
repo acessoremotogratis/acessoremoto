@@ -1,3 +1,9 @@
+# Cocoa Pods
+
+```bash
+gem install cocoapods --user-install
+```
+
 # Convert Icons
 
 ```bash
@@ -8,7 +14,8 @@ brew install imagemagick
 
 Some tips for customizing RustDesk for Windows (other platforms might require additional changes)
 
-- [Notes](#notes)
+- [Cocoa Pods](#cocoa-pods)
+- [Convert Icons](#convert-icons)
 - [Customizing RustDesk](#customizing-rustdesk)
 - [Changing the application name](#changing-the-application-name)
 - [Changing the application icons](#changing-the-application-icons)
@@ -17,6 +24,22 @@ Some tips for customizing RustDesk for Windows (other platforms might require ad
 - [Hide Console Window](#hide-console-window)
 - [Hosting Your Own Server](#hosting-your-own-server)
 - [Using a static encryption key](#using-a-static-encryption-key)
+  - [Dev Container](#dev-container)
+  - [Dependencies](#dependencies)
+  - [Raw steps to build](#raw-steps-to-build)
+  - [Build](#build)
+  - [How to build on Linux](#how-to-build-on-linux)
+    - [Ubuntu 18 (Debian 10)](#ubuntu-18-debian-10)
+    - [openSUSE Tumbleweed](#opensuse-tumbleweed)
+    - [Fedora 28 (CentOS 8)](#fedora-28-centos-8)
+    - [Arch (Manjaro)](#arch-manjaro)
+    - [Install vcpkg](#install-vcpkg)
+    - [Fix libvpx (For Fedora)](#fix-libvpx-for-fedora)
+    - [Build](#build-1)
+    - [Change Wayland to X11 (Xorg)](#change-wayland-to-x11-xorg)
+  - [Wayland support](#wayland-support)
+  - [How to build with Docker](#how-to-build-with-docker)
+  - [File Structure](#file-structure)
 
 Following all of these steps will result in a portable single file application that will only utilize your own personal server.
 
@@ -182,7 +205,7 @@ Please note that if you have values in the ID/Relay fields in the client, they w
 
 If you wish to only allow the public key for your own server, you can hard code it and ignore any config values entirely, preventing the end user from overriding it. Otherwise you can only do Step 1 and ignore the rest.
 
-1. Assign the public key (id_ed25519.pub) [generated on your server](https://rustdesk.com/docs/en/self-host/install/#key) to the _RS_PUB_KEY_ variable in `/rustdesk/libs/hbb_common/src/config.rs` at line 78
+1. Assign the public key (id*ed25519.pub) [generated on your server](https://rustdesk.com/docs/en/self-host/install/#key) to the \_RS_PUB_KEY* variable in `/rustdesk/libs/hbb_common/src/config.rs` at line 78
    ```
    pub const RS_PUB_KEY: &'static str = "your public key goes here";
    ```

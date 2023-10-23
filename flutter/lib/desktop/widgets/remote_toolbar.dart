@@ -20,7 +20,6 @@ import 'package:desktop_multi_window/desktop_multi_window.dart';
 import 'package:window_size/window_size.dart' as window_size;
 
 import '../../common.dart';
-import '../../common/widgets/dialog.dart';
 import '../../models/model.dart';
 import '../../models/platform_model.dart';
 import '../../common/shared_state.dart';
@@ -478,7 +477,7 @@ class _RemoteToolbarState extends State<RemoteToolbar> {
       toolbarItems.add(_ChatMenu(id: widget.id, ffi: widget.ffi));
       toolbarItems.add(_VoiceCallMenu(id: widget.id, ffi: widget.ffi));
     }
-    toolbarItems.add(_RecordMenu(ffi: widget.ffi));
+    toolbarItems.add(_RecordMenu());
     toolbarItems.add(_CloseMenu(id: widget.id, ffi: widget.ffi));
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -1646,17 +1645,17 @@ class _VoiceCallMenu extends StatelessWidget {
 }
 
 class _RecordMenu extends StatelessWidget {
-  final FFI ffi;
-  const _RecordMenu({Key? key, required this.ffi}) : super(key: key);
+  const _RecordMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var ffiModel = Provider.of<FfiModel>(context);
+    var ffi = Provider.of<FfiModel>(context);
     var recordingModel = Provider.of<RecordingModel>(context);
     final visible =
-        recordingModel.start || ffiModel.permissions['recording'] != false;
+        (recordingModel.start || ffi.permissions['recording'] != false) &&
+            ffi.pi.currentDisplay != kAllDisplayValue;
     if (!visible) return Offstage();
-    final menuButton = _IconMenuButton(
+    return _IconMenuButton(
       assetName: 'assets/rec.svg',
       tooltip: recordingModel.start
           ? 'Stop session recording'
@@ -1669,14 +1668,6 @@ class _RecordMenu extends StatelessWidget {
           ? _ToolbarTheme.hoverRedColor
           : _ToolbarTheme.hoverBlueColor,
     );
-    return ChangeNotifierProvider.value(
-        value: ffi.qualityMonitorModel,
-        child: Consumer<QualityMonitorModel>(
-            builder: (context, model, child) => Offstage(
-                  // If already started, AV1->Hidden/Stop, Other->Start, same as actual
-                  offstage: model.data.codecFormat == 'AV1',
-                  child: menuButton,
-                )));
   }
 }
 
@@ -1691,7 +1682,7 @@ class _CloseMenu extends StatelessWidget {
     return _IconMenuButton(
       assetName: 'assets/close.svg',
       tooltip: 'Close',
-      onPressed: () => clientClose(ffi.sessionId, ffi.dialogManager),
+      onPressed: () => closeConnection(id: id),
       color: _ToolbarTheme.redColor,
       hoverColor: _ToolbarTheme.hoverRedColor,
     );

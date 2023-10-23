@@ -29,13 +29,30 @@ brew install imagemagick
 ```
 gem install cocoapods --user-install
 brew install llvm create-dmg nasm yasm cmake gcc wget ninja pkg-config
-cargo install flutter_rust_bridge_codegen --version 3.10.6 --features "uuid"
+cargo install flutter_rust_bridge_codegen --version 1.75.3 --features "uuid"
 pushd flutter && flutter pub get && popd
 ~/.cargo/bin/flutter_rust_bridge_codegen --rust-input ./src/flutter_ffi.rs --dart-output ./flutter/lib/generated_bridge.dart --c-output ./flutter/macos/Runner/bridge_generated.h
 # xcode-select --install # Install Command Line Tools if you haven't already.
 # sudo xcode-select --switch /Library/Developer/CommandLineTools # Enable command line tools
 sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 ./build.py --flutter
+```
+
+# Ubuntu 22 (Flutter)
+
+```
+sudo apt install libstdc++-11-dev
+sudo apt install -y g++ gcc git curl wget nasm yasm libgtk-3-dev clang cmake libclang-dev ninja-build llvm-dev libclang-11-dev llvm-11-dev pkg-config
+cargo install flutter_rust_bridge_codegen --version 1.75.3 --features "uuid"
+cd flutter
+flutter pub get
+cd ..
+~/.cargo/bin/flutter_rust_bridge_codegen --rust-input ./src/flutter_ffi.rs --dart-output ./flutter/lib/generated_bridge.dart
+LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11 flutter run
+RUST_TOOLCHAIN_VERSION=$(cargo --version | awk '{print $2}')
+cargo build --lib --features hwcodec,flutter,flutter_texture_render --release
+LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11 python3 ./build.py --portable --hwcodec --flutter --feature IddDriver
+LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11 ./build.py --portable --flutter --hwcodec --feature IddDriver
 ```
 
 # Customizing RustDesk
@@ -47,6 +64,7 @@ Some tips for customizing RustDesk for Windows (other platforms might require ad
 - [Cocoa Pods](#cocoa-pods)
 - [Convert Icons](#convert-icons)
 - [Build MacOS (Flutter)](#build-macos-flutter)
+- [Ubuntu 22 (Flutter)](#ubuntu-22-flutter)
 - [Customizing RustDesk](#customizing-rustdesk)
 - [Changing the application name](#changing-the-application-name)
 - [Changing the application icons](#changing-the-application-icons)
